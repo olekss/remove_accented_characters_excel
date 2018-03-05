@@ -172,21 +172,23 @@ def ConvertSpecChars(CellValue, dict_lookup):
 sheet_list = wb._sheets
 
 for sheet in sheet_list:
+    #print(sheet.max_row)
     column_list = sheet.columns
     row_list = sheet.rows
     #print(sheet.max_row)
     #print(sheet.max_column)
     for column in range(1,sheet.max_column+1):
-        #print(column)
+        #print("column:", column)
         for row in range(1, sheet.max_row+1):
-            #print(row)
+            #print("row:", row)
             #print(sheet.cell(row=row, column=column).value)
-            NewCellValue=ConvertSpecChars(sheet.cell(row=row, column=column).value, dict_lookup)
-            #print(NewCellValue)
-            sheet.cell(row=row, column=column).value=NewCellValue
+            if sheet.cell(row=row, column=column).value is not None and type(sheet.cell(row=row, column=column).value) is str:
+                #print(type(sheet.cell(row=row, column=column).value))
+                NewCellValue=ConvertSpecChars(sheet.cell(row=row, column=column).value, dict_lookup)
+                #print(NewCellValue)
+                sheet.cell(row=row, column=column).value=NewCellValue
 wb.save(InputFile)
 
 print("")
 print("File was successfully converted!")
 time.sleep(5)
-
